@@ -2,10 +2,10 @@ package db
 
 import (
 	"database/sql"
+	_ "github.com/lib/pq"
 	"log"
 	"os"
 	"testing"
-	_ "github.com/lib/pq"
 )
 
 const (
@@ -14,15 +14,18 @@ const (
 )
 
 var testQueries *Queries
+var TestDB *sql.DB
 
 func TestMain(m *testing.M) {
-	conn, err := sql.Open(dbDriver, dbSource)
+	var err error
+
+	TestDB, err = sql.Open(dbDriver, dbSource)
 
 	if err != nil {
 		log.Fatal("cannot connect to db:", err)
 	}
 
-	testQueries = New(conn)
+	testQueries = New(TestDB)
 
 	os.Exit(m.Run())
 }
