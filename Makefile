@@ -1,10 +1,10 @@
 postgres:
 	docker run --name postgres16 -p 5432:5432 -e POSTGRES_PASSWORD=password -e POSTGRES_USER=root -d postgres:16-alpine
 
-startdb:
+dbstart:
 	docker start postgres16
 
-stopdb:
+dbstop:
 	docker stope postgres16
 
 createdb:
