@@ -7,10 +7,10 @@ dbstart:
 dbstop:
 	docker stope postgres16
 
-createdb:
+dbcreate:
 	docker exec -it postgres16 createdb --username=root --owner=root simple_bank
 
-dropdb:
+dbdrop:
 	docker exec -t postgres16 dropdb simple_bank
 
 migrateup:
@@ -28,4 +28,7 @@ test:
 server:
 	go run main.go
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc server startdb stopdb
+mock:
+	mockgen -package mockdb -destination db/mock/store.go github.com/farshan-dev/gin/db/sqlc Store
+
+.PHONY: postgres dbstart dbstop dbcreate dbdrop migrateup migratedown sqlc test server mock
